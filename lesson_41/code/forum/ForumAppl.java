@@ -43,7 +43,6 @@ public class ForumAppl {
                         forum.printArray();
                         System.out.println("Add more \n yes-to continue \n no-complete");
                         String a = scanner.next();
-//coment
                         if (a.equals("no")) {
                             break;
                         }
