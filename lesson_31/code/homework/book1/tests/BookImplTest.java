@@ -1,0 +1,72 @@
+package homework.book1.tests;
+
+import homework.book1.dao.BookImpl;
+import homework.book1.dao.Library;
+import homework.book1.model.Book;
+import homework.book1.model.Dictionary;
+import homework.book1.model.Roman;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class BookImplTest {
+    Library library;
+
+    Book[] book;
+
+    @BeforeEach
+    void setUp() {
+        library=new BookImpl(4);
+        book=new Book[3];
+        book[0]=new Dictionary("New Oxford Spelling Dictionary","by Oxford Languages",2014,
+                "124","Spelling",596);
+        book[1]=new Dictionary("A grammatical dictionary of the English language","by Karl",2008,
+                "345","Grammatical",148);
+        book[2]=new Roman("Белые ночи","Достоевский",1848,"101");
+
+        for (int i = 0; i < book.length; i++) {
+            library.addBook(book[i]);
+        }
+    }
+
+    @Test
+    void addEmployee() {
+        // не можем добавить null
+        assertFalse(library.addBook(null));
+        // не можем добавить второй раз, уже существующий
+        assertFalse(library.addBook(book[2]));
+        Book books1 = new Roman("В поисках утраченого времени","Марсель Пруст",1913,"154");
+        assertTrue(library.addBook(books1));
+        assertEquals(4, library.quantity());
+        Book books2 = new Roman("Золотой жук","Эдгар Алан По",1843,"543");
+        assertFalse(library.addBook(books2));
+    }
+
+    @Test
+    void removeEmployee() {
+        // удаляем книги
+        assertEquals(book[0] ,library.removeBook("124"));
+        assertEquals(2, library.quantity()); // книги стало на 1 меньше (4 - 1)
+        assertNull(library.removeBook("124")); // дважды не можем удалить
+        assertNull(library.findBook("124")); // не можем найти после удаления
+    }
+
+    @Test
+    void findEmployee() {
+        // ищем книгу по
+        assertEquals( book[1], library.findBook("345"));
+        // ищем несуществующюю книгу
+        assertNull(library.findBook("1101"));
+    }
+
+    @Test
+    void quantity() {
+        assertEquals(3,library.quantity());
+    }
+
+    @Test
+    void printBook() {
+        library.printBook();
+    }
+}
