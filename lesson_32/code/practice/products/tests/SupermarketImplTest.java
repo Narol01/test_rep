@@ -68,7 +68,6 @@ class SupermarketImplTest {
     }
     @Test
     void findProductsExp() {
-        supermarket.printProduct();
         Products[] actual = supermarket.findProductsExp("01.10","09.10");
         Products[] expexted ={products[0],products[1]};
         assertArrayEquals(expexted,actual);
