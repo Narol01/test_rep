@@ -5,6 +5,8 @@ import homework.archive.MenuArchive;
 public enum MenuArchive {
     ADD_DOCUMENTS("Добавить запись"),
     VIEW_DOCUMENTS("Посмотреть все записи"),
+    DELETE_DOCUMENT("Удалить запись (по номеру)"),
+    FIND_DOCUMENT("Найти документ в архиве"),
     QUANTITY_DOCUMENTS("Узнать количевство записей"),
     EXIT("Выйти");
 

@@ -5,8 +5,10 @@ import homework.archive.dao.ArchiveImpl;
 import homework.archive.model.Documents;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
+
 public class ArchiveAppl {
     public static void main(String[] args) {
         Archive archive;
@@ -14,7 +16,7 @@ public class ArchiveAppl {
         Documents[] documents;
         documents = new Documents[4];
         Scanner scanner = new Scanner(System.in);
-        Random random=new Random();
+        Random random = new Random();
         System.out.println("Welcome to ToDoList Menu");
         while (true) {
             MenuArchive.printMenu();
@@ -31,7 +33,7 @@ public class ArchiveAppl {
                         System.out.print(" \nВведите name:");
                         String name = scanner.next();
                         String url = String.valueOf(random.nextInt());
-                        System.out.print("Ваш url:"+ url+"\n");
+                        System.out.print("Ваш url:" + url + "\n");
                         LocalDateTime LokalNow = LocalDateTime.now();
                         Documents documents1 = new Documents(FolderId, documentId, name, url, LokalNow);
                         archive.addDocument(documents1);
@@ -43,19 +45,42 @@ public class ArchiveAppl {
                         }
                     }
                 }
-                case 2->{
+                case 2 -> {
                     System.out.println("Your documents: ");
                     archive.printArray();
                 }
-                case 3->{
-                    System.out.println("У вас есть  " + archive.size() + " документов.");
+                case 3 -> {
+                    System.out.print("Введите айди папки: ");
+                    int folderId = scanner.nextInt();
+                    System.out.print("Введите айди документа: ");
+                    int documentId = scanner.nextInt();
+                    if (archive.getDocumentFromArchive(documentId, folderId) == null) {
+                        System.out.println("Список записей пуст. Нечего удалять.");
+                    } else {
+                        archive.removeDocument(documentId, folderId);
+                        System.out.println("Запись удалена.");
+                    }
                 }
                 case 4->{
+                    System.out.print("Введите айди папки: ");
+                    int folderId = scanner.nextInt();
+                    System.out.print("Введите айди документа: ");
+                    int documentId = scanner.nextInt();
+                    if(archive.getDocumentFromArchive(documentId, folderId) == null){
+                        System.out.println("Неправильный ввод.");
+                    }else {
+                        System.out.println(archive.getDocumentFromArchive(documentId, folderId));
+                    }
+                }
+                case 5 -> {
+                    System.out.println("У вас есть  " + archive.size() + " документов.");
+                }
+                case 6 -> {
                     System.out.println("Выход из приложения.");
                     System.exit(0);
                 }
                 //раскопировать cases;
-                default-> {
+                default -> {
                     System.out.println("Неверный выбор");
                 }
             }
