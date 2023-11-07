@@ -1,5 +1,7 @@
 package practice.pets.modul;
 
+import homework.archive.model.Documents;
+
 import java.util.Objects;
 
 public abstract class Pets {
@@ -60,7 +62,7 @@ public abstract class Pets {
 
     @Override
     public String toString() {
-        return "pets{" +
+        return "Pets{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", breed='" + breed + '\'' +

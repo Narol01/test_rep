@@ -8,6 +8,8 @@ import practice.pets.modul.Cat;
 import practice.pets.modul.Dog;
 import practice.pets.modul.Pets;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HotelImplTest {
@@ -21,11 +23,10 @@ class HotelImplTest {
         pets=new Pets[3];
         pets[0]=new Dog(101,"Barsik","alabai",7,26,4,20);
         pets[1]=new Dog(102,"Jek","labrador",3,13,9,10);
-        pets[2]=new Cat(103,"tom","siamsk",7 ,12,15,10);
+        pets[2]=new Cat(103,"tom","alabai",7 ,12,15,10);
 
         for (int i = 0; i < pets.length; i++) {
             hotel.addPet(pets[i]);
-
         }
     }
 
@@ -43,7 +44,7 @@ class HotelImplTest {
     void removePet() {
         assertEquals(pets[1],hotel.removePet(102));
         assertNull(hotel.removePet(102));
-        assertNull(hotel.findPets("simka"));
+        assertNull(hotel.findPet(102));
     }
 
     @Test
@@ -58,8 +59,10 @@ class HotelImplTest {
 
     @Test
     void findPets() {
-        assertEquals(pets[0], hotel.findPets("alabai"));
-        assertNull(hotel.findPets("kot"));
+        Pets[] expected={pets[0],pets[2]};
+        assertArrayEquals(expected,hotel.findPets("alabai"));
+        System.out.println(Arrays.toString(hotel.findPets("alabai")));
+        assertNull(hotel.findPet(7));
     }
 
     @Test

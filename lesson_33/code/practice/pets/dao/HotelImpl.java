@@ -2,6 +2,9 @@ package practice.pets.dao;
 
 import practice.pets.modul.Pets;
 
+import java.util.Arrays;
+import java.util.function.Predicate;
+
 public class HotelImpl implements Hotel {
     private int size;
 
@@ -12,7 +15,7 @@ public class HotelImpl implements Hotel {
     }
     @Override
     public boolean addPet(Pets pets) {
-        if(pets == null || size == pet.length || findPets(pets.getBreed()) != null){
+        if(pets == null || size == pet.length || findPet(pets.getId()) != null){
             return false;
         }
         pet[size]=pets;
@@ -29,6 +32,16 @@ public class HotelImpl implements Hotel {
                 pet[size-1]=null;// ОБНУЛИЛИ ПОСЛЕДНЕГО
                 size --;
                 return victim;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Pets findPet(int id) {
+        for (int i = 0; i < size; i++) {
+            if (pet[i].getId() == id ) {
+                return pet[i];
             }
         }
         return null;
@@ -55,14 +68,22 @@ public class HotelImpl implements Hotel {
     }
 
     @Override
-    public Pets findPets(String breed) {
+    public Pets[] findPets(String breed) {
+        int c = 0;
         for (int i = 0; i < size; i++) {
             if (pet[i].getBreed() == breed) {
-                return  pet[i];
+                c++;
             }
         }
-        return null;
+        Pets[] doc = new Pets[c];
+        for (int i = 0, j = 0; j <c; i++) {
+            if (pet[i].getBreed() == breed) {
+                doc[j++]=pet[i];
+            }
+        }
+        return doc;
     }
+
 
     @Override
     public void printPets() {
