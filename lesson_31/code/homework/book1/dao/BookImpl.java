@@ -39,7 +39,6 @@ public class BookImpl implements Library {
 
     @Override
     public Book findBook(String isbn) {
-
         for (int i = 0; i < size; i++) {
             if(books[i].getISBN()==isbn){
                 return books[i];
