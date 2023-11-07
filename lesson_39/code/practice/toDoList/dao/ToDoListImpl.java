@@ -54,7 +54,7 @@ public class ToDoListImpl implements ToDoList {
                 task[size - 1] = null;
                 size--;
                 for (int j = 0; j < size; j++) {
-                    task[j].setId(j);
+                    task[j].setTaskNumber(j);
                 }
                 return removedTask;
             }
