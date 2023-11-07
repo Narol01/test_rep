@@ -7,6 +7,7 @@ public interface Library {
     boolean addBook(Book book);
     Book removeBook(String isbn);
     Book findBook(String isbn);
+    Book[] findBooks(String author);
     int quantity();
     void printBook();
 }

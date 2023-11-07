@@ -1,5 +1,7 @@
 package homework.book1.model;
 
+import java.util.Objects;
+
 public abstract class Book {
 
     protected String title;

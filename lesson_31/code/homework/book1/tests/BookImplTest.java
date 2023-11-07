@@ -7,6 +7,9 @@ import homework.book1.model.Dictionary;
 import homework.book1.model.Roman;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import practice.pets.modul.Pets;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,13 +20,14 @@ class BookImplTest {
 
     @BeforeEach
     void setUp() {
-        library=new BookImpl(4);
-        book=new Book[3];
+        library=new BookImpl(6);
+        book=new Book[5];
         book[0]=new Dictionary("New Oxford Spelling Dictionary","by Oxford Languages",2014,
                 "124","Spelling",596);
         book[1]=new Dictionary("A grammatical dictionary of the English language","by Karl",2008,
                 "345","Grammatical",148);
         book[2]=new Roman("Белые ночи","Достоевский",1848,"101");
+        book[3]=new Roman("Записки мёртвого дома","Достоевский",1848,"102");
 
         for (int i = 0; i < book.length; i++) {
             library.addBook(book[i]);
@@ -31,10 +35,8 @@ class BookImplTest {
     }
 
     @Test
-    void addEmployee() {
-        // не можем добавить null
+    void addBooks() {
         assertFalse(library.addBook(null));
-        // не можем добавить второй раз, уже существующий
         assertFalse(library.addBook(book[2]));
         Book books1 = new Roman("В поисках утраченого времени","Марсель Пруст",1913,"154");
         assertTrue(library.addBook(books1));
@@ -44,19 +46,24 @@ class BookImplTest {
     }
 
     @Test
-    void removeEmployee() {
-        // удаляем книги
+    void removeBooks() {
         assertEquals(book[0] ,library.removeBook("124"));
-        assertEquals(2, library.quantity()); // книги стало на 1 меньше (4 - 1)
-        assertNull(library.removeBook("124")); // дважды не можем удалить
-        assertNull(library.findBook("124")); // не можем найти после удаления
+        assertEquals(2, library.quantity());
+        assertNull(library.removeBook("124"));
+        assertNull(library.findBook("124"));
     }
 
     @Test
-    void findEmployee() {
-        // ищем книгу по
+    void findBooks(){
+        Book[] expected={book[2],book[3]};
+        assertArrayEquals(expected,library.findBooks("Достоевский"));
+        System.out.println(Arrays.toString(library.findBooks("Достоевский")));
+        assertNull(library.findBook("2355"));
+    }
+
+    @Test
+    void findBook() {
         assertEquals( book[1], library.findBook("345"));
-        // ищем несуществующюю книгу
         assertNull(library.findBook("1101"));
     }
 

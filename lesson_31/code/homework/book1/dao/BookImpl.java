@@ -3,6 +3,7 @@ package homework.book1.dao;
 import homework.book1.model.Book;
 import homework.book1.model.Dictionary;
 import homework.book1.model.Roman;
+import practice.pets.modul.Pets;
 
 public class BookImpl implements Library {
     private  Book[] books;
@@ -45,6 +46,23 @@ public class BookImpl implements Library {
             }
         }
         return null;
+    }
+
+    @Override
+    public Book[] findBooks(String author) {
+        int c = 0;
+        for (int i = 0; i < size; i++) {
+            if (books[i].getAuthor().equals(author)) {
+                c++;
+            }
+        }
+        Book[] doc = new Book[c];
+        for (int i = 0, j = 0; j <c; i++) {
+            if (books[i].getAuthor().equals(author)) {
+                doc[j++]=books[i];
+            }
+        }
+        return doc;
     }
 
     @Override
