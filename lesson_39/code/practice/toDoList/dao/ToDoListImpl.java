@@ -53,7 +53,6 @@ public class ToDoListImpl implements ToDoList {
                 }
                 task[size - 1] = null;
                 size--;
-                // устанавливаем новые индексы c 0 и подряд
                 for (int j = 0; j < size; j++) {
                     task[j].setId(j);
                 }
