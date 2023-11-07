@@ -32,9 +32,7 @@ public class ToDoAppl {
                         System.out.print("Ввод дaнных");
                         System.out.print(" \nВведите task:");
                         String task = scanner.next();
-                        System.out.print("Введите taskNumber:");
-                        int taskNumber = scanner.nextInt();
-                        Task task1 = new Task(toDoList.qtv()+1, task, taskNumber);
+                        Task task1 = new Task(toDoList.qtv()+1, task,toDoList.qtv()+1);
                         toDoList.addRecords(task1);
                         toDoList.viewRecords();
                         System.out.println("Дополнить ещё \n да-продожить \n нет-закончить");

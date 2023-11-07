@@ -5,30 +5,32 @@ import practice.toDoList.model.Task;
 
 import java.util.Arrays;
 
-public class ToDoListImpl implements ToDoList{
+public class ToDoListImpl implements ToDoList {
     private Task[] task;
     MenuTask menuTask;
 
     private int size;
-    public ToDoListImpl(int capacity){
-        task=new Task[capacity];
-        this.size=0;
+
+    public ToDoListImpl(int capacity) {
+        task = new Task[capacity];
+        this.size = 0;
     }
 
-    public Task findTask(int id) {
+    public Task findTask(int taskNumber) {
         for (int i = 0; i < size; i++) {
-            if(task[i].getId() == id){
-                return task[i];
+            if (task[i].getTaskNumber() == taskNumber) {
+                Task findedTask = task[i];
+                return findedTask;
             }
         }
         return null;
     }
 
     public boolean addRecords(Task tasks) {
-        if(tasks == null || size == task.length || findTask(tasks.getId()) != null){
+        if (tasks == null || size == task.length || findTask(tasks.getTaskNumber()) != null) {
             return false;
         }
-        task[size]=tasks;
+        task[size] = tasks;
         size++;
         return true;
     }
@@ -44,12 +46,18 @@ public class ToDoListImpl implements ToDoList{
     @Override
     public Task deleteRecords(int taskNumber) {
         for (int i = 0; i < size; i++) {
-            if(task[i].getTaskNumber()==taskNumber){
-                Task deleted =task[i];
-                task[i]=task[size-1];
-                task[size-1]=null;
-                size --;
-                return deleted;
+            if (task[i].getTaskNumber() == taskNumber) {
+                Task removedTask = task[i];
+                for (int j = i; j < size - 1; j++) {
+                    task[j] = task[j + 1];
+                }
+                task[size - 1] = null;
+                size--;
+                // устанавливаем новые индексы c 0 и подряд
+                for (int j = 0; j < size; j++) {
+                    task[j].setId(j);
+                }
+                return removedTask;
             }
         }
         return null;
@@ -60,7 +68,8 @@ public class ToDoListImpl implements ToDoList{
         System.out.println("Выход из приложения.");
 
     }
-    public int qtv(){
+
+    public int qtv() {
         return size;
     }
 }
