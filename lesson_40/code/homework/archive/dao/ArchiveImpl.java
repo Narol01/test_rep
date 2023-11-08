@@ -33,14 +33,17 @@ public class ArchiveImpl implements Archive {
 //    }
     @Override
     public boolean addDocument(Documents documents) {
-        if (documents == null || size == document.length || getDocumentFromArchive(documents.getDocumentId(), documents.getFolderId()) != null) {
-            return false;
+        for (int i = 0; i < document.length; i++) {
+            if (documents == null || size == document.length || getDocumentFromArchive(documents.getDocumentId(), documents.getFolderId()) != null) {
+                return false;
+            }
+                int index = Arrays.binarySearch(document, 0, size, documents, comparator);
+                index = index >= 0 ? index : -index - 1;
+                System.arraycopy(document, index, document, index + 1, size - index);
+                document[size] = documents;
+                size++;
+                return true;
         }
-        int index = Arrays.binarySearch(document, 0, size, documents, comparator);
-        index = index >= 0 ? index : -index - 1;
-        System.arraycopy(document, index, document, index + 1, size - index);
-        document[size] = documents;
-        size++;
         return true;
     }
 
@@ -73,7 +76,7 @@ public class ArchiveImpl implements Archive {
     }
 
     @Override
-    public boolean updateDocument(int documentId, int FolderId, int url) {
+    public boolean updateDocument(int documentId,int FolderId,int url) {
         for (int i = 0; i < document.length; i++) {
             if (document[i].getDocumentId() == documentId && document[i].getFolderId() == FolderId) {
                 document[i].setUrl(url);

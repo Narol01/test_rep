@@ -15,7 +15,7 @@ public class Documents implements Comparable<Documents> {
         this.folderId = folderId;
         this.documentId = documentId;
         this.name = name;
-        this.url = url;
+        this.url = url++;
         this.date = date;
     }
 
