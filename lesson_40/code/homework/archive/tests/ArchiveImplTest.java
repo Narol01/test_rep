@@ -21,12 +21,12 @@ class ArchiveImplTest {
     void setUp() {
         archive = new ArchiveImpl(7);
         documents = new Documents[6];
-        documents[0] = new Documents(1, 1, "t1", "url1", now.minusDays(7));
-        documents[1] = new Documents(1, 2, "t2", "url1", now.minusDays(7));
-        documents[2] = new Documents(1, 3, "t3", "url1", now.minusDays(5));
-        documents[3] = new Documents(2, 1, "t1", "url1", now.minusDays(7));
-        documents[4] = new Documents(2, 2, "t2", "url1", now.minusDays(7));
-        documents[5] = new Documents(2, 3, "t3", "url1", now.minusDays(8));
+        documents[0] = new Documents(1, 1, "t1", 1, now.minusDays(7));
+        documents[1] = new Documents(1, 2, "t2", 2, now.minusDays(7));
+        documents[2] = new Documents(1, 3, "t3", 3, now.minusDays(5));
+        documents[3] = new Documents(2, 1, "t1", 4, now.minusDays(7));
+        documents[4] = new Documents(2, 2, "t2", 5, now.minusDays(7));
+        documents[5] = new Documents(2, 3, "t3", 6, now.minusDays(8));
 
         for (int i = 0; i < documents.length; i++) {
             archive.addDocument(documents[i]);
@@ -37,7 +37,7 @@ class ArchiveImplTest {
     void addDocument() {
         assertFalse(archive.addDocument(null));
         assertFalse(archive.addDocument(documents[1]));
-        Documents documents1 = new Documents(1, 4, "t", "url", now);
+        Documents documents1 = new Documents(1, 4, "t", 7, now);
         assertTrue(archive.addDocument(documents1));
         assertEquals(7, archive.size());
         assertFalse(archive.addDocument(documents1));
@@ -47,15 +47,15 @@ class ArchiveImplTest {
 
     @Test
     void removeDocument() {
-        assertTrue(archive.removeDocument(1, 1));
+        assertEquals(documents[0],archive.removeDocument(1, 1));
         assertEquals(5, archive.size());
         assertNull(archive.getDocumentFromArchive(1, 1));
     }
 
     @Test
     void updateDocument() {
-        assertTrue(archive.updateDocument(1, 1, "newUrl"));
-        assertEquals("newUrl", archive.getDocumentFromArchive(1, 1).getUrl());
+        assertTrue(archive.updateDocument(1, 1, 14));
+        assertEquals(14, archive.getDocumentFromArchive(1, 1).getUrl());
     }
 
     @Test

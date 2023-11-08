@@ -32,10 +32,8 @@ public class ArchiveAppl {
                         int documentId = scanner.nextInt();
                         System.out.print(" \nВведите name:");
                         String name = scanner.next();
-                        String url = String.valueOf(random.nextInt());
-                        System.out.print("Ваш url:" + url + "\n");
                         LocalDateTime LokalNow = LocalDateTime.now();
-                        Documents documents1 = new Documents(FolderId, documentId, name, url, LokalNow);
+                        Documents documents1 = new Documents(FolderId, documentId, name, archive.size()+1, LokalNow);
                         archive.addDocument(documents1);
                         archive.printArray();
                         System.out.println("Дополнить ещё \n yes-продожить \n no-закончить");

@@ -1,6 +1,7 @@
 package homework.archive.dao;
 
 import homework.archive.model.Documents;
+import practice.toDoList.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public class ArchiveImpl implements Archive {
         int index = Arrays.binarySearch(document, 0, size, documents, comparator);
         index = index >= 0 ? index : -index - 1;
         System.arraycopy(document, index, document, index + 1, size - index);
-        document[index] = documents;
+        document[size] = documents;
         size++;
         return true;
     }
@@ -53,20 +54,26 @@ public class ArchiveImpl implements Archive {
     }
 
     @Override
-    public boolean removeDocument(int documentId, int FolderId) {
-        for (int i = 0; i < document.length; i++) {
+    public Documents removeDocument(int documentId, int FolderId) {
+        for (int i = 0; i < size; i++) {
             if (document[i].getDocumentId() == documentId && document[i].getFolderId() == FolderId) {
-                document[i] = document[size - 1];
+                Documents removedDoc = document[i];
+                for (int j = i; j < size - 1; j++) {
+                    document[j] = document[j + 1];
+                }
                 document[size - 1] = null;
                 size--;
-                return true;
+                for (int j = 0; j < size; j++) {
+                    document[j].setUrl(j);
+                }
+                return removedDoc;
             }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public boolean updateDocument(int documentId, int FolderId, String url) {
+    public boolean updateDocument(int documentId, int FolderId, int url) {
         for (int i = 0; i < document.length; i++) {
             if (document[i].getDocumentId() == documentId && document[i].getFolderId() == FolderId) {
                 document[i].setUrl(url);

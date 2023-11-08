@@ -8,10 +8,10 @@ public class Documents implements Comparable<Documents> {
     int folderId;// папки
     int documentId;// документа
     private String name; //название
-    private String url;
+    private int url;
     private LocalDateTime date; // дата документа
 
-    public Documents(int folderId, int documentId, String name, String url, LocalDateTime date) {
+    public Documents(int folderId, int documentId, String name, int url, LocalDateTime date) {
         this.folderId = folderId;
         this.documentId = documentId;
         this.name = name;
@@ -31,7 +31,7 @@ public class Documents implements Comparable<Documents> {
         return name;
     }
 
-    public String getUrl() {
+    public int getUrl() {
         return url;
     }
 
@@ -43,7 +43,7 @@ public class Documents implements Comparable<Documents> {
         this.name = name;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(int url) {
         this.url = url;
     }
 
