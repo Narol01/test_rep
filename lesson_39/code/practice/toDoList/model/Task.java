@@ -39,9 +39,11 @@ public class Task implements Comparable<Task>{
 
     @Override
     public String toString() {
-        return "Task:" +
-                " taskNumber=" + taskNumber +
-                " task='" + task;
+        return "Task{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", taskNumber=" + taskNumber +
+                '}';
     }
 
     @Override

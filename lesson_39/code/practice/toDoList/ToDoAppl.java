@@ -16,13 +16,12 @@ public class ToDoAppl {
         Task[] taski;
         taski = new Task[4];
         taski[0] = new Task(1, "write", 1);
-        taski[1] = new Task(2, "write", 2);
+        taski[1] = new Task(2, "writeи", 2);
         for (int i = 0; i < taski.length; i++) {
             toDoList.addRecords(taski[i]);
         }
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to ToDoList Menu");
-        try {
             while (true) {
                 MenuTask.printMenu();
                 System.out.print("Выберите действие: ");
@@ -75,8 +74,5 @@ public class ToDoAppl {
                     }
                 }
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage()+","+"try again");
         }
     }
-}
