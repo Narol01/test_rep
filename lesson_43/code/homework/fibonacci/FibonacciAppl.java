@@ -12,9 +12,10 @@ public class FibonacciAppl {
             System.out.print(s+" ");
             sum+=s;
         }
+        System.out.println();
         // 1, 1, 2, 3, 5, 8, 13, 21 - это должно получиться
 
-        System.out.println("sum =" + sum);
+        System.out.println("sum=" + sum);
         // sum = 54
 
 
