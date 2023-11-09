@@ -20,6 +20,7 @@ public class Temperatura {
         System.out.println(Arrays.toString(november));
         System.out.println("Среднее значение температуры за последние две недели "+avg);
 
+
         //Способ два при помощи обьеденения масива используя интерфейс IntStream
         int[] week=IntStream.concat(IntStream.of(august),(IntStream.of(november))).toArray();
         System.out.println(Arrays.toString(week));
