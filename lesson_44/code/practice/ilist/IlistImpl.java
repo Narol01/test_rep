@@ -3,7 +3,7 @@ package practice.ilist;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class IlistImpl<E> implements Ilist {
+public class IlistImpl<E> implements Ilist<E>,Iterable<E> {
     private Object[] elements;
     private int size;//размер списка
 
@@ -32,13 +32,14 @@ public class IlistImpl<E> implements Ilist {
     }
 
     @Override
-    public boolean add(Object element) {
+    public boolean add(E element) {
         ensureCapacity();
         elements[size++] = element;
         return true;
     }
 
     private void ensureCapacity() {
+        if (size==elements.length){
         if (size == Integer.MAX_VALUE) {
             throw new OutOfMemoryError();//
         }
@@ -48,9 +49,10 @@ public class IlistImpl<E> implements Ilist {
         }
         elements = Arrays.copyOf(elements, newCapacity);
     }
+    }
 
     @Override
-    public boolean add(int index, Object element) {
+    public boolean add(int index, E element) {
         if (index == size) {
             add(element);
             return true;
@@ -86,7 +88,7 @@ public class IlistImpl<E> implements Ilist {
     }
 
     @Override
-    public E set(int index, Object element) {
+    public E set(int index, E element) {
         checkIndex(index);
         E victim = (E) elements[index];
         elements[index]=element;
@@ -132,4 +134,5 @@ public class IlistImpl<E> implements Ilist {
             }
         };
     }
+
 }
