@@ -57,6 +57,10 @@ public class IlistAppl {
         System.out.println(listCity.size());
         System.out.println(listCity.isEmpty());
         System.out.println("----------------------");
+        for (String s:listCity) {
+            System.out.print(s + "|");
+        }
+        System.out.println();
         System.out.println(listCity.indexOf("30"));
         System.out.println("----------------------");
         System.out.println(listCity.get(2));
