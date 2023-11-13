@@ -72,12 +72,13 @@ public class IlistAppl {
         System.out.println(listCity.size());
         System.out.println(listCity.isEmpty());
         System.out.println("----------------------");
+        for (String s: listCity) {
+            System.out.println(s);
+        }
+        System.out.println("=================");
         listCity.clean();
         System.out.println(listCity.size());
         System.out.println(listCity.isEmpty());
         System.out.println("----------------------");
-        for (String s: listCity) {
-            System.out.println(s);
-        }
     }
 }
