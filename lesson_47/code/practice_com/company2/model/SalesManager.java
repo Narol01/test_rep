@@ -1,12 +1,12 @@
-package practice_com.company1.model;
+package practice_com.company2.model;
 
-public class SalesManager extends Employee {
+public class SalesManager extends Employee implements Comparable<SalesManager> {
 
     private double salesValue;
     private double percent;
 
-    public SalesManager(int id, String firstName, String lastName, int age, double hours, double salesValue, double percent) {
-        super(id, firstName, lastName, age, hours);
+    public SalesManager(int id, String firstName, String lastName, int age, double hours,int experience,String education, double salesValue, double percent) {
+        super(id, firstName, lastName, age, hours,experience,education);
         this.salesValue = salesValue;
         this.percent = percent;
     }
@@ -31,6 +31,11 @@ public class SalesManager extends Employee {
     public double calcSalary(){
         double salary= salesValue * percent;
         return salary;
+    }
+    @Override
+    public int compareTo(SalesManager o) {
+        int res = this.experience - o.experience;
+        return res != 0 ? res : this.education.compareTo(o.education);
     }
 }
 

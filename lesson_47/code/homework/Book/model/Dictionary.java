@@ -1,6 +1,6 @@
 package homework.Book.model;
 
-import homework.book1.model.Book;
+import homework.Book.model.Book;
 
 public class Dictionary extends Book {
 
@@ -31,4 +31,8 @@ public class Dictionary extends Book {
         this.wordCount = wordCount;
     }
 
+    @Override
+    public int compareTo(Book o) {
+        return 0;
+    }
 }

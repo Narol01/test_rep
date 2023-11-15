@@ -1,20 +1,25 @@
-package practice_com.company1.model;
+package practice_com.company2.model;
 
-public abstract class Employee {
+
+public abstract class Employee{
     //поля класса
     protected final int id;
     protected String firstName;
     protected String lastName;
     protected int age;
     protected double hours;
+    protected int experience;
+    protected String education;
 
     // конструктор
-    public Employee(int id, String firstName, String lastName, int age, double hours) {
+    public Employee(int id, String firstName, String lastName, int age, double hours,int experience,String education) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.hours = hours;
+        this.experience=experience;
+        this.education=education;
     }
 
     public int getId() {
@@ -53,6 +58,22 @@ public abstract class Employee {
         this.hours = hours;
     }
 
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,15 +89,20 @@ public abstract class Employee {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Employee ");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", hours=").append(hours);
-        sb.append(", salary=").append(calcSalary());
-        return sb.toString();
+        return "\nEmployee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", hours=" + hours +
+                ", experience=" + experience +
+                ", education='" + education + '\'' +
+                '}';
+    }
+    public int compareTo(Employee o) {
+        int res = this.experience - o.experience;
+        return res != 0 ? res : -(this.education.compareTo(o.education));
     }
 
     public abstract double calcSalary(); // определили абстрактный метод (у него нет тела!)
-
 }

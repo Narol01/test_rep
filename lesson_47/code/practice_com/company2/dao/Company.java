@@ -1,6 +1,6 @@
-package practice_com.company1.dao;
+package practice_com.company2.dao;
 
-import practice.company1.model.Employee;
+import practice_com.company2.model.Employee;
 
 //    - добавить сотрудника
 //    - удалить сотрудника

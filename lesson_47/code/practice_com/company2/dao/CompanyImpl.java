@@ -1,7 +1,7 @@
-package practice_com.company1.dao;
+package practice_com.company2.dao;
 
-import practice.company1.model.Employee;
-import practice.company1.model.SalesManager;
+import practice_com.company2.model.Employee;
+import practice_com.company2.model.SalesManager;
 
 public class CompanyImpl implements Company {
 
