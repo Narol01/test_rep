@@ -80,12 +80,27 @@ public class NodeListImpl<E> implements NodeList<E> {
 
     @Override
     public E get(int index) {
-        return null;
+        Node<E> node = getNodeByIndex(index);
+        return node.data;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        int index = 0;
+        if (o != null) {
+            for (Node<E> node = first; node != null; node = node.next, index++) {
+                if (o.equals(node.data)) {
+                    return index;
+                }
+            }
+        } else {
+            for (Node<E> node = first; node != null; node = node.next, index++) {
+                if (o == node.data) {
+                    return index;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -95,16 +110,54 @@ public class NodeListImpl<E> implements NodeList<E> {
 
     @Override
     public E remove(int index) {
-        return null;
+        Node<E> node = getNodeByIndex(index);
+        return unlink(node);
+    }
+
+    private E unlink(Node<E> node) {
+        E victim = node.data;
+        Node<E> prev = node.prev;
+        Node<E> next = node.next;
+        if (prev != null) {
+            prev.next = next;
+            node.prev = null;
+        } else {
+            first = next;
+        }
+        if (next != null) {
+            next.prev = prev;
+            node.next = null;
+        } else {
+            last = prev;
+        }
+        node.data = null;
+        size--;
+        return victim;
     }
 
     @Override
     public E set(int index, E element) {
-        return null;
+        Node<E> node = getNodeByIndex(index);//нашли узел по индексу
+        E victim = node.data;
+        node.data = element;//обновили данные
+        return victim;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Iterator<E>() {
+            Node<E> current=first;
+            @Override
+            public boolean hasNext() {
+                return current!=null;
+            }
+
+            @Override
+            public E next() {
+                E data =current.data;
+                current=current.next;
+                return data;
+            }
+        };
     }
 }
