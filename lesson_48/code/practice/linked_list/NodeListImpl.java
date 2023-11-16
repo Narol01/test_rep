@@ -10,12 +10,13 @@ public class NodeListImpl<E> implements NodeList<E> {
 
     private int size;
 
-
+    // O(1)
     @Override
     public int size() {
         return size;
     }
 
+    // O(1)
     @Override
     public boolean add(E element) { // добавляем элемент в список
         Node<E> newNode = new Node<>(last, element, null); // создаем новый, следующий узел, он последний
@@ -29,14 +30,14 @@ public class NodeListImpl<E> implements NodeList<E> {
         return true;
         // узел новый, следующий, в конец списка
     }
-
+    // O(1)
     @Override
     public void clear() {
         last=null;
         first = null;
         size = 0;
     }
-
+    // O(n)
     @Override
     public boolean add(int index, E element) {
         if (index == size) { // добавление элемента в конец
@@ -55,6 +56,7 @@ public class NodeListImpl<E> implements NodeList<E> {
     }
 
     // разобраться, как работает метод
+    // O(n)
     private Node<E> getNodeByIndex(int index) {
         checkIndex(index);
         Node<E> node;
@@ -71,19 +73,19 @@ public class NodeListImpl<E> implements NodeList<E> {
         }
         return node;
     }
-
+    // O(1)
     private void checkIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(index);
         }
     }
-
+    // O(1)
     @Override
     public E get(int index) {
         Node<E> node = getNodeByIndex(index);
         return node.data;
     }
-
+    // O(n)
     @Override
     public int indexOf(Object o) {
         int index = 0;
@@ -107,34 +109,34 @@ public class NodeListImpl<E> implements NodeList<E> {
     public int lastIndexOf(Object o) {
         return 0;
     }
-
+    // O(1)
     @Override
     public E remove(int index) {
         Node<E> node = getNodeByIndex(index);
         return unlink(node);
     }
-
+    // O(1)
     private E unlink(Node<E> node) {
-        E victim = node.data;
-        Node<E> prev = node.prev;
-        Node<E> next = node.next;
-        if (prev != null) {
-            prev.next = next;
-            node.prev = null;
-        } else {
+        E victim = node.data;//удаляемый элемент
+        Node<E> prev = node.prev;//ссылка на предыдущий узел
+        Node<E> next = node.next;//ссылка на следующий узел
+        if (prev != null) {// если ссылка на предыдущий узел не равна нулю
+            prev.next = next;//из ссылки на предыдущий узел мы делаем ссылку на следующий узел
+            node.prev = null;// а ссылку на предыдущий узел мы обнуляем
+        } else {// если ссылка на предыдущий узел равна нулю, то мы удаляем первый узел и первому узлу задаём ссылку на следующий узел
             first = next;
         }
-        if (next != null) {
-            next.prev = prev;
-            node.next = null;
-        } else {
+        if (next != null) {// если ссылка на следующий узел не равна нулю
+            next.prev = prev;//из ссылки на следующий узел мы делаем ссылку на предыдущий узел
+            node.next = null;// а ссылку на следующий узел мы обнуляем
+        } else {// если ссылка на след узел равна нулю, то мы удаляем последний узел и последнему узлу задаём ссылку на предыдущий узел
             last = prev;
         }
-        node.data = null;
-        size--;
-        return victim;
+        node.data = null;//обнуляем
+        size--;// уменьшаем количество элементов
+        return victim;// суть метода в том что бы обнулить все значения и вернуть удалённый узел у которого все значения равны нулю
     }
-
+    // O(1)
     @Override
     public E set(int index, E element) {
         Node<E> node = getNodeByIndex(index);//нашли узел по индексу
