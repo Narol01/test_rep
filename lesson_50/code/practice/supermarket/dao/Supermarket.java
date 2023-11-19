@@ -2,6 +2,8 @@ package practice.supermarket.dao;
 
 import practice.supermarket.model.Product;
 
+import java.util.ArrayList;
+
 public interface Supermarket extends Iterable<Product> {
     boolean addProduct(Product product);
     Product remove(long barCode);

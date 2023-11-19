@@ -2,74 +2,94 @@ package practice.supermarket.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import practice.products.dao.Supermarket;
-import practice.products.dao.SupermarketImpl;
-import practice.products.model.Food;
-import practice.products.model.MeatFood;
-import practice.products.model.MilkFood;
-import practice.products.model.Products;
+import practice.supermarket.dao.Supermarket;
+import practice.supermarket.dao.SupermarketImpl;
+import practice.supermarket.model.Product;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SupermarketImplTest {
 
     Supermarket supermarket;
-
-    Products[] products;
-
-
+    LocalDate now = LocalDate.now();
 
     @BeforeEach
     void setUp() {
-        supermarket=new SupermarketImpl(5);
-        products= new Products[3];
-        products[0]=new Food( "Sausages",2000, 5, "02.10");
-        products[1]=new MeatFood("Chicken fillet",35453L,9.90,"03.10","Chicken");
-        products[2]=new MilkFood("Milk",4353664L,2,"15.10","Whole",0.3);
-        for (int i = 0; i < products.length; i++) {
-            supermarket.addProduct(products[i]);
-        }
-
+        supermarket=new SupermarketImpl();
+        supermarket.addProduct(new Product(111111, "White Bread", "Bread", "Kolosok", 6.5, now.plusDays(5)));
+        supermarket.addProduct(new Product(222222, "ChokoMilk", "Dairy", "MilkLand", 13, now.minusDays(3)));
+        supermarket.addProduct(new Product(333333, "Cheese Gauda", "Dairy", "Farmer", 22.5, now.plusDays(50)));
+        supermarket.addProduct(new Product(444444, "Cheese Chedder", "Dairy", "MilkLand", 30, now.plusDays(85)));
+        supermarket.addProduct(new Product(555555, "Sweet Buns", "Bread", "Kolosok", 18.3, now.minusDays(25)));
     }
 
     @Test
     void addProduct() {
         assertFalse(supermarket.addProduct(null));
-        assertFalse(supermarket.addProduct(products[2]));
-        Products products1 =new Food("Yogurt", 941845L,1.39,"10.10");
-        assertTrue(supermarket.addProduct(products1));
-        assertEquals(4, supermarket.quantity());
-        Products products2 =new Food( "Goat cheese",3000, 13, "31.12");
-        assertFalse(supermarket.addProduct(products1));
+        assertFalse(supermarket.addProduct(new Product(111111, "White Bread", "Bread", "Kolosok", 6.5, now.plusDays(5))));
+        assertTrue(supermarket.addProduct(new Product(111112, "White Bread", "Bread", "Kolosok", 6.5, now.plusDays(5))));
+        assertEquals(6, supermarket.skuQuantity());
     }
 
     @Test
     void removeProduct() {
-        assertEquals(products[0],supermarket.removeProduct(2000L));
-        assertEquals(2, supermarket.quantity());
-        assertNull(supermarket.removeProduct(2000L));
-        assertNull(supermarket.removeProduct(2000L));
+        assertEquals(new Product(555555, "Sweet Buns", "Bread", "Kolosok", 18.3, now.minusDays(25)),supermarket.remove(555555));
+        assertEquals(4, supermarket.skuQuantity());
+        assertNull(supermarket.remove(555555));
     }
 
     @Test
-    void findProduct() {
-        assertEquals(products[0],supermarket.findProduct(2000L));
-        assertNull(supermarket.findProduct(2001L));
+    void findByBarCode() {
+        assertEquals(new Product(222222, "ChokoMilk", "Dairy", "MilkLand", 13, now.minusDays(3)),supermarket.findByBarCode(222222));
+        assertNull(supermarket.findByBarCode(2001L));
     }
 
     @Test
     void quantity() {
-        assertEquals(3,supermarket.quantity());
+        assertEquals(5,supermarket.skuQuantity());
+    }
+    @Test
+    void findByCategory() {
+        Iterable<Product> res= supermarket.findByCategory("bread");
+        ArrayList<Product> expected= new ArrayList<>();
+        expected.add(new Product(111111, "White Bread", "Bread", "Kolosok", 6.5, now.plusDays(5)));
+        expected.add(new Product(555555, "Sweet Buns", "Bread", "Kolosok", 18.3, now.minusDays(25)));
+        assertEquals(expected,res);
+        int count=0;
+        for (Product d:res) {
+            count++;
+        }
+        assertEquals(2,count);
+
     }
 
     @Test
-    void printProduct() {
-        supermarket.printProduct();
+    void findByBrand(){
+        Iterable<Product> res= supermarket.findByBrand("Kolosok");
+        ArrayList<Product> expected= new ArrayList<>();
+        expected.add(new Product(111111, "White Bread", "Bread", "Kolosok", 6.5, now.plusDays(5)));
+        expected.add(new Product(555555, "Sweet Buns", "Bread", "Kolosok", 18.3, now.minusDays(25)));
+        assertEquals(expected,res);
+        int count=0;
+        for (Product d:res) {
+            count++;
+        }
+        assertEquals(2,count);
     }
     @Test
-    void findProductsExp() {
-        Products[] actual = supermarket.findProductsExp("01.10","09.10");
-        Products[] expexted ={products[0],products[1]};
-        assertArrayEquals(expexted,actual);
+    void findByProductsWithExpiredDate(){
+        Iterable<Product> res= supermarket.findByProductsWithExpiredDate();
+        ArrayList<Product> expected= new ArrayList<>();
+        expected.add(new Product(222222, "ChokoMilk", "Dairy", "MilkLand", 13, now.minusDays(3)));
+        expected.add(new Product(555555, "Sweet Buns", "Bread", "Kolosok", 18.3, now.minusDays(25)));
+        assertEquals(expected,res);
+        int count=0;
+        for (Product d:res) {
+            count++;
+        }
+        assertEquals(2,count);
     }
 }
