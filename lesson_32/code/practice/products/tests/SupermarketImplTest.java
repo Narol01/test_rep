@@ -8,7 +8,6 @@ import practice.supermarket.model.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
