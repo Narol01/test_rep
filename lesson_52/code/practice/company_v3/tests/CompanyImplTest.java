@@ -20,10 +20,10 @@ class CompanyImplTest {
     Company company;
     Employee[] e;
 
-    Comparable<Employee> comparator=new Comparable<Employee>() {
+    Comparator<Employee> comparator = new Comparator<Employee>() {
         @Override
-        public int compareTo(Employee o) {
-            return 0;
+        public int compare(Employee o1, Employee o2) {
+            return Integer.compare(o1.getId(), o2.getId());
         }
     };
 
