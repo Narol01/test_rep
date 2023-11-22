@@ -4,12 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import practice.company_v3.dao.Company;
 import practice.company_v3.dao.CompanyArrayListImpl;
+import practice.company_v3.dao.CompanyHashSetImpl;
 import practice.company_v3.model.Employee;
 import practice.company_v3.model.Manager;
 import practice.company_v3.model.SalesManager;
 import practice.company_v3.model.Worker;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,11 +20,18 @@ class CompanyImplTest {
     Company company;
     Employee[] e;
 
+    Comparable<Employee> comparator=new Comparable<Employee>() {
+        @Override
+        public int compareTo(Employee o) {
+            return 0;
+        }
+    };
+
     // добавить comparator по id для сортировки массивов перед assertArrayEquals
 
     @BeforeEach
     void setUp() {
-        company = new CompanyArrayListImpl(5); // создан объект класса CompanyArrayListImpl
+        company = new CompanyHashSetImpl(5); // создан объект класса CompanyArrayListImpl
         e = new Employee[4];
         e[0] = new Manager(101, "John", "Smith", 45, 160, 5000, 5);
         e[1] = new SalesManager(102, "Anna", "Black", 36, 160, 25000, 0.1);
@@ -34,6 +43,7 @@ class CompanyImplTest {
             company.addEmployee(e[i]);
         }
     }
+
 
     @Test
     void addEmployee() {
@@ -101,6 +111,7 @@ class CompanyImplTest {
     @Test
     void findEmployeesHoursGreaterThanTest(){
         Employee[] actual = company.findEmployeesHoursGreaterThan(100);
+        Arrays.sort(actual);
         Employee[] expected = {e[0], e[1], e[2]};
         assertArrayEquals(expected, actual);
     }

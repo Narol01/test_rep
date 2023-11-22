@@ -10,7 +10,6 @@ package practice.company_v3.dao;
 //    - напечатать список сотрудников
 
 import practice.company_v3.model.Employee;
-import practice.company_v3.model.Employee;
 
 public interface Company {
     // объявляем методы, только сигнатуры, без тела метода
