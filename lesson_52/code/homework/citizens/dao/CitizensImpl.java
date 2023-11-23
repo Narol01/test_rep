@@ -14,6 +14,19 @@ public class CitizensImpl implements Citizens{
     List<Person> lastNameLIst;
     List<Person> ageList;
 
+    private static Comparator<Person> ageComparator=(p1,p2)->{
+        int res=(p1.getAge()-(p2.getAge()));
+        return res!=0 ? res:Integer.compare(p1.getId(),p2.getId());
+    };
+    private static Comparator<Person> lastNameComparator(){
+        return new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                int res=(o1.getLastName().compareTo(o2.getLastName()));
+                return res!=0 ? res:Integer.compare(o1.getId(),o2.getId());
+            }
+        };
+    }
     public CitizensImpl(){
         lastNameLIst=new ArrayList<>();
         idList=new ArrayList<>();
@@ -21,6 +34,7 @@ public class CitizensImpl implements Citizens{
     }
     public CitizensImpl(List<Person> citizens) {
     }
+
     @Override
     public boolean add(Person person) {
         if(person == null || find(person.getId()) != null) {
@@ -53,9 +67,8 @@ public class CitizensImpl implements Citizens{
 
     @Override
     public Iterable<Person> find(int minAge, int maxAge) {
-        return findByPredicate(p->p.getAge()>minAge && p.getAge()<maxAge );
+        return findByPredicate(p->p.getAge()>=minAge && p.getAge()<=maxAge );
     }
-
     @Override
     public Iterable<Person> find(String lastName) {
         return findByPredicate(p->p.getLastName().equals(lastName));
@@ -69,24 +82,6 @@ public class CitizensImpl implements Citizens{
             }
         }
         return res;
-    }
-    static Comparator<Person> lastNameComparator(){
-        Comparator<Person> comparator = new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return (o1.getLastName().compareTo(o2.getLastName()));
-            }
-        };
-        return comparator;
-    }
-    static Comparator<Person> ageComparator(){
-        Comparator<Person> comparator = new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return Integer.compare(o1.getAge(), o2.getAge());
-            }
-        };
-        return comparator;
     }
 
     @Override
