@@ -3,6 +3,7 @@ package homework.citizens.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Person implements Comparable<Person>{
@@ -41,9 +42,9 @@ public class Person implements Comparable<Person>{
     public String getLastName() {
         return lastName;
     }
-
     public int getAge() {
-        return this.birthDate.compareTo(LocalDate.now());
+        int age = (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now());
+        return age;
     }
 
     @Override
@@ -71,6 +72,6 @@ public class Person implements Comparable<Person>{
 
     @Override
     public int compareTo(Person o) {
-        return this.id-o.id;
+        return Integer.compare(this.id, o.id);
     }
 }

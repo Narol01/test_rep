@@ -8,8 +8,8 @@ public interface Citizens  {
     Person find(int id);
     Iterable<Person> find(int minAge,int maxAge);
     Iterable<Person> find(String lastName);
-    Iterable<Person> getAllPersonSortedById();
-    Iterable<Person> getAllPersonSortedByAge();
-    Iterable<Person> getAllPersonSortedByLastName();
+    Iterable<Person> getAllPersonsSortedById();
+    Iterable<Person> getAllPersonsSortedByAge();
+    Iterable<Person> getAllPersonsSortedByLastName();
     int size();
 }

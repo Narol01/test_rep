@@ -34,7 +34,7 @@ class CitizensImplTest {
         assertFalse(citizen.add(new Person(2,"John","Smith",now.minusYears(20))));
         assertEquals(4,citizen.size());
         assertTrue(citizen.add(new Person(5,"Jack","Willis",now.minusYears(25))));
-        assertEquals(4,citizen.size());
+        assertEquals(5,citizen.size());
     }
 
     @Test
@@ -48,12 +48,12 @@ class CitizensImplTest {
 
     @Test
     void find() {
-        Person person=citizen.find(1);
-        assertEquals(1,person.getId());
-        assertEquals("Peter",person.getFirstName());
-        assertEquals("Jackson",person.getLastName());
-        assertEquals(23,person.getAge());
-        assertNull(citizen.find(5));
+        Person person = citizen.find(1);
+        assertEquals(1, person.getId());
+        assertEquals("Peter", person.getFirstName());
+        assertEquals("Jackson", person.getLastName());
+        assertEquals(23 , person.getAge());
+        assertNull(citizen.find(5)); // не будет найден отсутствующий, а метод вернет null
     }
 
     @Test
@@ -72,17 +72,19 @@ class CitizensImplTest {
 
     @Test
     void testFindByAge() {
-        Iterable<Person> person=citizen.find(19,23);
-        List<Person> actual=new ArrayList<>();
-        for(Person p:person){
-            actual.add(p);
+        Iterable<Person> persons = citizen.find(20, 23);
+        // перенесем полученных в рез-те поиска в ArrayList
+        List<Person> actual = new ArrayList<>();
+        for (Person person : persons) {
+            actual.add(person);
         }
-        Collections.sort(actual);//сортируем в порядке возрастания по ид
-        List<Person> expected=List.of(
-                new Person(1,"Peter","Jackson",now.minusYears(23)),
-                new Person(2,"John","Smith",now.minusYears(20)),
-                new Person(3,"Mary","Jackson",now.minusYears(23)));
-        assertIterableEquals(expected,actual);
+        Collections.sort(actual); // сортируем по id
+        List<Person> expected = List.of (
+                new Person(1, "Peter", "Jackson", now.minusYears(23)),
+                new Person(2, "John", "Smith", now.minusYears(20)),
+                new Person(3, "Mary", "Jackson",now.minusYears(23))
+        );
+        assertIterableEquals(expected, actual);
     }
 
 
@@ -90,7 +92,7 @@ class CitizensImplTest {
     void getAllPersonSortedById() {
         //что отберутся все персоны,что все они отсортированы по айди,
         // то есть айди текущего он должен быть меньше чем айди следующего.
-        Iterable<Person> person=citizen.getAllPersonSortedById();
+        Iterable<Person> person=citizen.getAllPersonsSortedById();
         int id=-1;
         int count=0;
         for (Person p:person){
@@ -112,30 +114,28 @@ class CitizensImplTest {
 
     @Test
     void getAllPersonSortedByAge() {
-        Iterable<Person> person=citizen.getAllPersonSortedByAge();
-        int age=-1;
-        int count=0;
-        for (Person p:person){
+        Iterable<Person> persons = citizen.getAllPersonsSortedByAge();
+        int age = -1;
+        int count = 0;
+        for (Person person : persons) {
             count++;
-            assertTrue(p.getAge()>=age);
-            age=p.getAge();
-
+            assertTrue(person.getAge() >= age); // следующий age больше предыдущего
+            age = person.getAge();
         }
-        assertEquals(citizen.size(),count);
+        assertEquals(count,citizen.size());
     }
 
     @Test
     void getAllPersonSortedByLastName() {
-        Iterable<Person> person=citizen.getAllPersonSortedByAge();
-        String lastName="";
-        int count=0;
-        for (Person p:person){
+        Iterable<Person> persons = citizen.getAllPersonsSortedByLastName();
+        String lastName = "";
+        int count = 0;
+        for (Person person : persons) {
             count++;
-            assertTrue(p.getLastName().compareTo(lastName)>=0);
-            lastName=p.getLastName();
-
+            assertTrue(person.getLastName().compareTo(lastName) >= 0); // следующий lastName больше предыдущего
+            lastName = person.getLastName();
         }
-        assertEquals(citizen.size(),count);
+        assertEquals(count,citizen.size());
 
     }
 
