@@ -1,6 +1,5 @@
 package practice_com.company2;
 
-import practice.bus.Bus;
 import practice_com.company2.model.Manager;
 import practice_com.company2.model.SalesManager;
 import practice_com.company2.model.Employee;

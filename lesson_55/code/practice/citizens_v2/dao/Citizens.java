@@ -1,6 +1,6 @@
-package homework.citizens.dao;
+package practice.citizens_v2.dao;
 
-import homework.citizens.model.Person;
+import practice.citizens_v2.model.Person;
 
 public interface Citizens  {
     boolean add(Person person);

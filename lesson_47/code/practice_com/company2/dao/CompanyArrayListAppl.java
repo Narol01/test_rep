@@ -1,7 +1,6 @@
 package practice_com.company2.dao;
 
 import practice_com.company2.model.Employee;
-import practice_com.company2.dao.Company;
 import practice_com.company2.model.SalesManager;
 
 import java.util.ArrayList;

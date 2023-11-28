@@ -1,8 +1,8 @@
-package homework.citizens;
+package practice.citizens_v2.test;
 
-import homework.citizens.dao.Citizens;
-import homework.citizens.dao.CitizensImpl;
-import homework.citizens.model.Person;
+import practice.citizens_v2.dao.Citizens;
+import practice.citizens_v2.dao.CitizensHashSetImpl;
+import practice.citizens_v2.model.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class CitizensImplTest {
 
     @BeforeEach
     void SetUp(){
-        citizen=new CitizensImpl(List.of(
+        citizen=new CitizensHashSetImpl(List.of(
                 new Person(1,"Peter","Jackson",now.minusYears(23)),
                 new Person(2,"John","Smith",now.minusYears(20)),
                 new Person(3,"Mary","Jackson",now.minusYears(23)),
@@ -116,6 +116,8 @@ class CitizensImplTest {
         Iterable<Person> persons = citizen.getAllPersonsSortedByAge();
         int age = -1;
         int count = 0;
+        assertEquals(4,citizen.size());
+
         for (Person person : persons) {
             count++;
             assertTrue(person.getAge() >= age); // следующий age больше предыдущего

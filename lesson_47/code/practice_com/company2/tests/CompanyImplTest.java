@@ -2,9 +2,8 @@ package practice_com.company2.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import practice_com.company2.dao.CompanyArrayListAppl;
-import practice_com.company2.dao.CompanyImpl;
 import practice_com.company2.dao.Company;
+import practice_com.company2.dao.CompanyArrayListAppl;
 import practice_com.company2.model.Employee;
 import practice_com.company2.model.Manager;
 import practice_com.company2.model.SalesManager;
@@ -50,7 +49,7 @@ class CompanyImplTest {
     @Test
     void removeEmployee() {
         // удаляем сотрудника
-        assertEquals(e[1] ,company.removeEmployee(102));
+        assertEquals(e[2] ,company.removeEmployee(102));
         assertEquals(3, company.quantity()); // сотрудников стало на 1 меньше (4 - 1)
         assertNull(company.removeEmployee(102)); // дважды не можем удалить
         assertNull(company.findEmployee(102)); // не можем найти после удаления
@@ -59,7 +58,7 @@ class CompanyImplTest {
     @Test
     void findEmployee() {
         // ищем сотрудника по id
-        assertEquals( e[1], company.findEmployee(102));
+        assertEquals( e[2], company.findEmployee(102));
         // ищем несуществующего сотрудника
         assertNull(company.findEmployee(105));
     }
@@ -92,7 +91,7 @@ class CompanyImplTest {
     @Test
     void findEmployeesHoursGreaterThan() {
         Employee[] actual = company.findEmployeesHoursGreaterThan(100);
-        Employee[] expexted ={e[0],e[1],e[2]};
+        Employee[] expexted ={e[0],e[1],e[2],e[3]};
         assertArrayEquals(expexted,actual);
     }
 

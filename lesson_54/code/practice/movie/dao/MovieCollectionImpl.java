@@ -18,6 +18,7 @@ public class MovieCollectionImpl implements MoviesCollection {
     public MovieCollectionImpl(List<Movie> movies) {
         this.moviesList = new ArrayList<>(movies);
         for (Movie m : movies) {
+            //movies.add(m);
             addMovie(m);
         }
     }
