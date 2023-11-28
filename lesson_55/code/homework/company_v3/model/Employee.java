@@ -1,6 +1,6 @@
 package homework.company_v3.model;
 
-public class Employee implements Comparable<Employee>{
+public abstract class Employee implements Comparable<Employee>{
     //поля класса
     protected final int id;
     protected String firstName;
@@ -9,11 +9,10 @@ public class Employee implements Comparable<Employee>{
     protected double hours;
     protected int experience;
     protected String education;
-    private double baseSalary;
-    private int grade;
+
 
     // конструктор
-    public Employee(int id, String firstName, String lastName, int age, double hours,int experience,String education,double baseSalary,int grade) {
+    public Employee(int id, String firstName, String lastName, int age, double hours,int experience,String education) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,8 +20,6 @@ public class Employee implements Comparable<Employee>{
         this.hours = hours;
         this.experience=experience;
         this.education=education;
-        this.baseSalary=baseSalary;
-        this.grade=grade;
     }
 
     public int getId() {
@@ -59,22 +56,6 @@ public class Employee implements Comparable<Employee>{
 
     public void setHours(double hours) {
         this.hours = hours;
-    }
-
-    public double getBaseSalary() {
-        return baseSalary;
-    }
-
-    public void setBaseSalary(double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public int getExperience() {
@@ -121,4 +102,6 @@ public class Employee implements Comparable<Employee>{
     public int compareTo(Employee o) {
         return this.id - o.id;
     }
+
+    public abstract double calcSalary();
 }

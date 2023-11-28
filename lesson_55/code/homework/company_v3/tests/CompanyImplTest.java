@@ -1,6 +1,9 @@
 package homework.company_v3.tests;
 
 import homework.company_v3.dao.CompanySetImpl;
+import homework.company_v3.model.Manager;
+import homework.company_v3.model.SalesManager;
+import homework.company_v3.model.Worker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import homework.company_v3.dao.Company;
@@ -21,14 +24,14 @@ class CompanyImplTest {
     void setUp() {
         company = new CompanySetImpl();
         e = new Employee[4];
-        e[0] = new Employee(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5);
-        e[1] = new Employee(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,5);
-        e[2] = new Employee(102,"Thomas","White",21,160,1,"'1'-School",30000,5);
-        e[3] = new Employee(103,"Hans","Bauer",30,160,5,"'0'- without",5,5);
+        e[0] = new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5);
+        e[1] = new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1);
+        e[2] = new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1);
+        e[3] = new Worker(103,"Hans","Bauer",30,160,5,"'0'- without",5);
 
         // dobavim element massiva v kompani
-        for (int i = 0; i < e.length; i++) {
-            company.addEmployee(e[i]);
+        for (Employee employee : e) {
+            company.addEmployee(employee);
         }
     }
 
@@ -38,7 +41,7 @@ class CompanyImplTest {
         assertFalse(company.addEmployee(null));
         // не можем добавить второй раз, уже существующий
         assertFalse(company.addEmployee(e[1]));
-        assertTrue(company.addEmployee(new Employee(105, "Ivan", "Dubin", 55, 160,5,"'0'- without", 6000, 6))); // добавили нового сотрудника
+        assertTrue(company.addEmployee(new Manager(105, "Ivan", "Dubin", 55, 160,5,"'0'- without", 6000, 6))); // добавили нового сотрудника
         assertEquals(5, company.quantity()); // теперь в компании 5 сотрудников
 
     }
@@ -64,6 +67,20 @@ class CompanyImplTest {
     void quantityTest() {
         assertEquals(4,company.quantity());
     }
+    @Test
+    void totalSalaryTest() {
+        assertEquals(12100,company.totalSalary());
+    }
+
+    @Test
+    void avgSalaryTest() {
+        assertEquals(3025,company.avgSalary(),0.01);
+    }
+
+    @Test
+    void totalSales() {
+        assertEquals(55000,company.totalSales());
+    }
 
     @Test
     void printEmployees() {
@@ -80,10 +97,10 @@ class CompanyImplTest {
         }
         Collections.sort(actual); // сортируем по id
         List<Employee> expected = List.of (
-                e[0] = new Employee(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
-        e[1] = new Employee(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,5),
-        e[2] = new Employee(102,"Thomas","White",21,160,1,"'1'-School",30000,5),
-        e[3] = new Employee(103,"Hans","Bauer",30,160,5,"'0'- without",1000,6)
+                e[0] = new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
+        e[1] = new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1),
+        e[2] = new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1),
+        e[3] = new Worker(103,"Hans","Bauer",30,160,5,"'0'- without",5)
         );
         assertIterableEquals(expected, actual);
     }
@@ -98,8 +115,9 @@ class CompanyImplTest {
         }
         Collections.sort(actual); // сортируем по id
         List<Employee> expected = List.of (
-                new Employee(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
-                new Employee(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,5)
+                new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
+                new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1),
+                new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1)
         );
         assertIterableEquals(expected, actual);
     }

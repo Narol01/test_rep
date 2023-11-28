@@ -16,6 +16,9 @@ public interface Company {
     Employee removeEmployee(int id);
     Employee findEmployee(int id);
     int quantity();
+    double totalSalary();
+    double avgSalary();
+    double totalSales();
     void printEmployee();
     Iterable<Employee> findEmployeesHoursGreaterThan(int hours);
     Iterable<Employee> findEmployeesSalaryRange(int minSalary, int maxSalary);
