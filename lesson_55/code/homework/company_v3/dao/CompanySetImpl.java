@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class CompanySetImpl implements Company{
     TreeSet<Employee> employees;
+    public CompanySetImpl(){
+        employees =new TreeSet<>();
+    }
     public CompanySetImpl(List<Employee> empl){
         employees =new TreeSet<>();
         for(Employee empld:empl){
