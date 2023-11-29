@@ -26,8 +26,8 @@ class CompanyImplTest {
         e = new Employee[4];
         e[0] = new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5);
         e[1] = new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1);
-        e[2] = new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1);
-        e[3] = new Worker(103,"Hans","Bauer",30,160,5,"'0'- without",5);
+        e[2] = new SalesManager(103,"Thomas","White",21,160,1,"'1'-School",30000,0.1);
+        e[3] = new Worker(102,"Hans","Bauer",30,160,5,"'0'- without",5);
 
         // dobavim element massiva v kompani
         for (Employee employee : e) {

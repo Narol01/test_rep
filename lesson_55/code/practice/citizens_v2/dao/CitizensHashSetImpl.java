@@ -5,6 +5,7 @@ import practice.movie.model.Movie;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CitizensHashSetImpl implements Citizens {
 
@@ -50,24 +51,19 @@ public class CitizensHashSetImpl implements Citizens {
 
     @Override
     public Iterable<Person> find(int minAge, int maxAge) {
-        List<Person> foundByAge = new ArrayList<>();
-        for (Person p : idList) {
-            if(p.getAge()>=minAge  && p.getAge()<=maxAge) {
-                foundByAge.add(p);
-            }
-        }
-        return foundByAge;
+//        List<Person> foundByAge = new ArrayList<>();
+//        for (Person p : idList) {
+//            if(p.getAge()>=minAge  && p.getAge()<=maxAge) {
+//                foundByAge.add(p);
+//            }
+//        }
+//        return foundByAge;
+        return idList.stream().filter(p->p.getAge()>=minAge  && p.getAge()<=maxAge).collect(Collectors.toList());
     }
 
     @Override
     public Iterable<Person> find(String lastName) {
-        List<Person> foundByLast = new ArrayList<>();
-        for (Person p : idList) {
-            if(p.getLastName().equals(lastName)) {
-                foundByLast.add(p);
-            }
-        }
-        return foundByLast;
+        return idList.stream().filter(p->p.getLastName().equalsIgnoreCase(lastName)).collect(Collectors.toList());
 
     }
 
@@ -79,7 +75,10 @@ public class CitizensHashSetImpl implements Citizens {
 
     @Override
     public Iterable<Person> getAllPersonsSortedByAge() {
-        List<Person> sortedList=new ArrayList<>(ageList);
+        List<Person> sortedList = new ArrayList<>(ageList);
+        //for(Person p:ageList){
+        //sortedList.add(p);
+        // }
         sortedList.sort(ageComparator);
         return sortedList;
     }
