@@ -1,86 +1,76 @@
 package homework.car.dao;
 
 import homework.car.model.Car;
+import homework.company_v3.model.Employee;
+import practice.citizens_v2.model.Person;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 
 public class GarageImpl implements Garage {
-    private Car[] cars;
-    private int size;
+    HashSet<Car> cars = new HashSet<>();
 
-    public GarageImpl(int capacity) {
-        cars = new Car[capacity];
+    public GarageImpl() {
+        cars=new HashSet<>();
+    }
+    public GarageImpl(List<Car> car) {
+        for(Car car1:cars){
+            addCar(car1);
+        }
     }
 
     @Override
     public boolean addCar(Car car) {
-        if (car == null || size == cars.length || findCarByRegNumber(car.getRegNumber()) != null) {
-            return false;
-        }
-        cars[size++] = car;
-        return true;
+        return car != null && cars.add(car);
     }
 
     @Override
-    public Car removeCar(String regNumber) {
-        for (int i = 0; i < size; i++) {
-            if (regNumber.equals(cars[i].getRegNumber())) {
-                Car temp = cars[i];
-//                cars[i] = cars[--size];
-                System.arraycopy(cars, i + 1, cars, i, size - i - 1);
-                cars[--size] = null;
-                return temp;
-            }
-        }
-        return null;
+    public boolean removeCar(String regNumber) {
+        Car carByRegNumber=findCarByRegNumber(regNumber);
+        return carByRegNumber!=null && cars.remove(carByRegNumber);
     }
 
     @Override
     public Car findCarByRegNumber(String regNumber) {
-        for (int i = 0; i < size; i++) {
-            if (cars[i].getRegNumber().equals(regNumber)) {
-                return cars[i];
+        for (Car m : cars) {
+            if(m.getRegNumber() == regNumber) {
+                return m;
             }
         }
         return null;
     }
 
     @Override
-    public Car[] findCarsByModel(String model) {
-        return findCarsByPredicate(c -> model.equals(c.getModel()));
+    public  Iterable<Car> findCarsByModel(String model) {
+        return cars.stream()
+                .filter(m -> m.getModel().equalsIgnoreCase(model))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Car[] findCarsByCompany(String company) {
-        return findCarsByPredicate(c -> company.equals(c.getCompany()));
+    public  Iterable<Car> findCarsByCompany(String company) {
+        return cars.stream()
+                .filter(m -> company.equals(m.getCompany()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Car[] findCarsByEngine(double min, double max) {
-        return findCarsByPredicate(c -> c.getEngine() >= min && c.getEngine() < max);
+    public  Iterable<Car> findCarsByEngine(double min, double max) {
+        return cars.stream()
+                .filter(m -> m.getEngine() >= min && m.getEngine() < max)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Car[] findCarsByColor(String color) {
-        return findCarsByPredicate(c -> color.equals(c.getColor()));
-//        return findCarsByPredicate(c -> c.getColor().equals(color));
+    public  Iterable<Car> findCarsByColor(String color) {
+        return cars.stream()
+                .filter(m ->m.getColor().equals(color) )
+                .collect(Collectors.toList());
     }
 
-    private Car[] findCarsByPredicate(Predicate<Car> predicate) {
-        int count = 0;
-        for (int i = 0; i < size; i++) {
-            if (predicate.test(cars[i])) {
-                count++;
-            }
-        }
-        Car[] res = Arrays.copyOf(cars,count);
-        for (int i = 0, j = 0; j < res.length; i++) {
-            if (predicate.test(cars[i])) {
-                res[j++] = cars[i];
-            }
-        }
-        return res;
-    }
 
 }

@@ -4,17 +4,17 @@ import homework.company_v3.model.Employee;
 import homework.company_v3.model.Manager;
 import homework.company_v3.model.SalesManager;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class CompanySetImpl implements Company{
-    TreeSet<Employee> employees;
+    HashSet<Employee> employees;
     public CompanySetImpl(){
-        employees =new TreeSet<>();
+        employees =new HashSet<>();
     }
     public CompanySetImpl(List<Employee> empl){
-        employees =new TreeSet<>();
+        employees =new HashSet<>();
         for(Employee empld:empl){
             addEmployee(empld);
         }

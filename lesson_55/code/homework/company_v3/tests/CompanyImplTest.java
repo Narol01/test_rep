@@ -49,7 +49,7 @@ class CompanyImplTest {
     @Test
     void removeEmployee() {
         // удаляем сотрудника
-        assertEquals(e[2] ,company.removeEmployee(102));
+        assertEquals(e[3] ,company.removeEmployee(102));
         assertEquals(3, company.quantity()); // сотрудников стало на 1 меньше (4 - 1)
         assertNull(company.removeEmployee(102)); // дважды не можем удалить
         assertNull(company.findEmployee(102)); // не можем найти после удаления
@@ -58,7 +58,7 @@ class CompanyImplTest {
     @Test
     void findEmployee() {
         // ищем сотрудника по id
-        assertEquals( e[2], company.findEmployee(102));
+        assertEquals( e[3], company.findEmployee(102));
         // ищем несуществующего сотрудника
         assertNull(company.findEmployee(105));
     }
@@ -99,8 +99,8 @@ class CompanyImplTest {
         List<Employee> expected = List.of (
                 e[0] = new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
         e[1] = new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1),
-        e[2] = new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1),
-        e[3] = new Worker(103,"Hans","Bauer",30,160,5,"'0'- without",5)
+                e[2] = new Worker(102,"Hans","Bauer",30,160,5,"'0'- without",5),
+                e[3] = new SalesManager(103,"Thomas","White",21,160,1,"'1'-School",30000,0.1)
         );
         assertIterableEquals(expected, actual);
     }
@@ -117,7 +117,7 @@ class CompanyImplTest {
         List<Employee> expected = List.of (
                 new Manager(100,"Jhon","Smith",35,160,2,"'2'-Bakalavr",5000,5),
                 new SalesManager(101,"Anna","Black",46,160,7,"'3'-Magistrate",25000,0.1),
-                new SalesManager(102,"Thomas","White",21,160,1,"'1'-School",30000,0.1)
+                new SalesManager(103,"Thomas","White",21,160,1,"'1'-School",30000,0.1)
         );
         assertIterableEquals(expected, actual);
     }

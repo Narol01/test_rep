@@ -1,19 +1,20 @@
 package homework.car.dao;
 
 import homework.car.model.Car;
+import homework.company_v3.model.Employee;
 
 public interface Garage {
     boolean addCar(Car car);
 
-    Car removeCar(String regNumber);
+    boolean removeCar(String regNumber);
 
     Car findCarByRegNumber(String regNumber);
 
-    Car[] findCarsByModel(String model);
+    Iterable<Car> findCarsByModel(String model);
 
-    Car[] findCarsByCompany(String company);
+    Iterable<Car> findCarsByCompany(String company);
 
-    Car[] findCarsByEngine(double min, double max);
+    Iterable<Car> findCarsByEngine(double min, double max);
 
-    Car[] findCarsByColor(String color);
+    Iterable<Car> findCarsByColor(String color);
 }

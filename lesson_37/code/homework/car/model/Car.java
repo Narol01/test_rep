@@ -3,7 +3,7 @@ package homework.car.model;
 
 import practice.cite.model.City;
 
-public class Car {
+public class Car implements Comparable<Car> {
     private String regNumber;
     private String model;
     private String company;
@@ -71,5 +71,10 @@ public class Car {
     @Override
     public int hashCode() {
         return regNumber.hashCode();
+    }
+
+    @Override
+    public int compareTo(Car o) {
+        return this.getRegNumber().compareTo(o.regNumber);
     }
 }
