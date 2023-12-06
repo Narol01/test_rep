@@ -1,24 +1,29 @@
 package homework;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ShipmentAppl {
     public static void main(String[] args) {
         Random random = new Random();
-        int numContainers = random.nextInt(11) + 10; // От 10 до 20 контейнеров
+        int numContainers = random.nextInt(10,21); // От 10 до 20 контейнеров
 
-        List<Container> containers = Stream.generate(() ->
-                        new Container("Container " + (numContainers), random.nextInt(11) + 10))
-                .limit(numContainers)
+
+            List<Container> containers = Stream.generate(() ->
+                            new Container("Wakanda", random.nextInt(10, 21)))
+                    .limit(numContainers)
+                    .collect(Collectors.toList());
+        List<Integer> contNumbers = IntStream.rangeClosed(1, numContainers)
+                .boxed()
                 .collect(Collectors.toList());
 
-        containers.forEach(container -> {
-            System.out.println("Container: " + container.label);
+        IntStream.range(0, numContainers).forEach(index -> {
+            Container container = containers.get(index);
+            System.out.println("Container " + contNumbers.get(index) + " : " + container.label);
             container.boxes.forEach(box -> {
                 System.out.println("  Box with " + box.parcels.size() + " parcels");
                 box.parcels.forEach(parcel ->
@@ -28,8 +33,7 @@ public class ShipmentAppl {
         });
 
         int totalParcels = containers.stream()
-                .flatMap(container -> container.boxes.stream())
-                .mapToInt(box -> box.parcels.size())
+                .mapToInt(Container::getTotalParcels)
                 .sum();
 
         double totalWeight = containers.stream()
@@ -40,5 +44,19 @@ public class ShipmentAppl {
 
         System.out.println("Total parcels: " + totalParcels);
         System.out.println("Total weight: " + totalWeight + " kg");
+
+        int maxParcels = containers.stream()
+                .mapToInt(Container::getTotalParcels)
+                .max()
+                .orElse(0);
+        System.out.println("Max parcel in Container = " + maxParcels);
+        System.out.println();
+        System.out.println("Containers with the maximum number of parcels:");
+        containers.stream()
+                .filter(container -> container.getTotalParcels()>=maxParcels)
+                .forEach(System.out::println);
+
     }
+
+
 }

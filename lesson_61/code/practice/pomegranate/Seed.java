@@ -1,10 +1,9 @@
-package homework;
+package practice.pomegranate;
 
-public class Parcel {
-
+public class Seed {
     double weight;
 
-    public Parcel(double weight) {
+    public Seed(double weight) {
         this.weight = weight;
     }
 
@@ -14,10 +13,5 @@ public class Parcel {
 
     public void setWeight(double weight) {
         this.weight = weight;
-    }
-
-    @Override
-    public String toString() {
-        return "\nParcel have " + weight + "kg";
     }
 }

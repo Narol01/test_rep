@@ -1,26 +1,32 @@
 package homework;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-class Container {
+class Container implements Iterable<Box>{
+    static AtomicInteger containerCounter = new AtomicInteger(1);
     String label;
     List<Box> boxes;
 
     public Container(String label, int numBoxes) {
-        this.label = label;
+        this.label = "Container-" + containerCounter.getAndIncrement();
         Random random = new Random();
         this.boxes = IntStream.range(0, numBoxes)
-                .mapToObj(i -> new Box(random.nextInt(6) + 5))
+                .mapToObj(i -> new Box(random.nextInt(5,11)))
                 .collect(Collectors.toList());
+    }
+    public int getTotalParcels() {
+        return boxes.stream()
+                .mapToInt(box -> box.parcels.size())
+                .sum();
     }
 
     public String getLabel() {
-        return label;
+        return  label;
     }
 
     public void setLabel(String label) {
@@ -33,5 +39,17 @@ class Container {
 
     public void setBoxes(List<Box> boxes) {
         this.boxes = boxes;
+    }
+
+    @Override
+    public String toString() {
+        return "Container{ " +
+                "label=' " + label + '\'' +
+                ", boxes= " + boxes;
+    }
+
+        @Override
+    public Iterator<Box> iterator() {
+        return boxes.iterator();
     }
 }
