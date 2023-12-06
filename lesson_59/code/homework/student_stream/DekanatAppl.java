@@ -1,5 +1,7 @@
 package homework.student_stream;
 
+import practice.users.User;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -79,8 +81,10 @@ public class DekanatAppl {
 
         long countDifferentCountries = studList.stream()
                 .filter(p->p.isGender()==gender)
+                .map(Student::getCountry)
+                .distinct() // исключение дубликатов
                 .count(); // кол-во
-        System.out.println("Number of gender: " + countDifferentCountries);
+        System.out.println("Number of Country: " + countDifferentCountries);
     }
 
     private static void countWoman(List<Student> studList,boolean gender){
@@ -92,8 +96,10 @@ public class DekanatAppl {
 
         long countDifferentCountries = studList.stream()
                 .filter(p->p.isGender()==gender)
+                .map(Student::getCountry)
+                .distinct() // исключение дубликатов
                 .count(); // кол-во
-        System.out.println("Number of gender: " + countDifferentCountries);
+        System.out.println("Number of Country: " + countDifferentCountries);
     }
 
     private static void averageCourse(List<Student> studList,String course){
