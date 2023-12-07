@@ -58,15 +58,11 @@ public class ReviewsAppl {
 
     }
 
-    public static double getAvgRatingByProduct(List<Review> reviews, String product) {
-        List<Review> productReviews = reviews.stream()
+    public static double getAvgRatingByProduct(ArrayList<Review> reviews, String product) {
+        return reviews.stream()
                 .filter(review -> review.getProduct().equals(product))
-                .collect(Collectors.toList());
-
-        int ratingSum = productReviews.stream()
-                .mapToInt(Review::getRating)
-                .sum();
-
-        return productReviews.size() > 0 ? (double) ratingSum / productReviews.size() : 0.0;
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
     }
 }

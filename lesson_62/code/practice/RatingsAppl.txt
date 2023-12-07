@@ -1,0 +1,47 @@
+package practice.reviews;
+
+import practice.computer.model.Laptop;
+import practice.programer.Programmer;
+import practice.reviews.model.Review;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/*Рассчитайте рейтинг продуктов на основании оценок в отзывах на эти продукты.
+
+        Получите также:
+        - список продуктов, отсортированный по их рейтингу;
+        - список продуктов, отсортированный по количеству отзывов на них;
+        - список авторов, отсортированный по количеству лайков под их отзывами.*/
+public class ReviewsAppl {
+    public static void main(String[] args) {
+        Random random=new Random();
+        ArrayList<Review> reviews = new ArrayList<>(List.of(
+                new Review(random.nextInt(1,11),"Fine","Cat","Tomato" ),
+                new Review(random.nextInt(1,11),"Bad","Cat","Tomato" ),
+        new Review(random.nextInt(1,11),"very recommended","Si","Tomato" ),
+        new Review(random.nextInt(1,11),"Fresh and nice","Tine","Orange" ),
+        new Review(random.nextInt(1,11),"very good","Cat","Orange" ),
+        new Review(random.nextInt(1,11),"fine","Kim","Orange" ),
+        new Review(random.nextInt(1,11),"Fresh","Kim","Tomato" ),
+        new Review(random.nextInt(1,11),"delivery was too late","Kim","Potato" ),
+        new Review(random.nextInt(1,11),"tasty","Tine","Potato" ),
+        new Review(random.nextInt(1,11),"tasty","Stark","Pizza" ),
+        new Review(random.nextInt(1,11),"too hot","Dave","Pizza" )
+        ));
+        reviews.forEach(System.out::println);
+        System.out.println("----------------");
+        reviews.stream().sorted(Review::compareToRating).forEach(System.out::println);
+        Map<String,Long> techFrequency=reviews.stream()
+                .map(Review::getProduct)
+                //.flatMap(Review::stream)
+                .collect(Collectors.groupingBy(t->t ,Collectors.counting()));
+
+
+        System.out.println(techFrequency);
+        long prod= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Tomato")).count();
+        long prodO= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Orange")).count();
+        long prodP= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Potato")).count();
+        long prodPi= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Pizza")).count();
+    }
+}
