@@ -41,20 +41,19 @@ public class ReviewsAppl {
         System.out.println("-------Sorting by comment---------");
         Map<String, Long> productFrequency = reviews.stream()
                 .collect(Collectors.groupingBy(Review::getProduct, Collectors.counting()));
-        System.out.println("Sorting By comment"+"\n"+productFrequency);//Результат группировки
-
+        System.out.println(productFrequency);//Результат группировки
+        System.out.println();
         productFrequency.entrySet().stream()//Сортировка
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
                 .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
 
 
         System.out.println("---------- Get Avg Rating -----------");
-        //double avg=ratings.getAvgRatingByProduct("Pizza");
         System.out.println( getAvgRatingByProduct(reviews,"Pizza"));
 
 
         System.out.println("-------Sorting by likes---------");
-        // reviews.stream().sorted(Review::compareTo).forEach(System.out::println); проверка что бы понять правильный ли список авторов отсортированый по лайкам
+        // reviews.stream().sorted(Review::compareTo).forEach(System.out::println); // проверка что бы понять правильный ли список авторов отсортированный по лайкам
         reviews.stream().sorted(Review::compareTo).map(Review::getAuthor).distinct().forEach(System.out::println);
 
     }
