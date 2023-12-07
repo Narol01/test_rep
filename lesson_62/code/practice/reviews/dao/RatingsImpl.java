@@ -2,8 +2,10 @@ package practice.reviews.dao;
 
 import practice.reviews.model.Review;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class RatingsImpl implements Ratings{
@@ -11,17 +13,11 @@ public class RatingsImpl implements Ratings{
     Collection<Review> reviews;
 
     public RatingsImpl(){
-        reviews=new HashSet<>();
+        reviews=new ArrayList<>();
     }
 
     @Override
     public boolean add(Review review) {
-//        for (int i = 0; i < ; i++) {
-//        if(review.getAuthor().equalsIgnoreCase(review.getAuthor()) & review.getProduct().equalsIgnoreCase(review.getProduct())) {
-//            return false;
-//
-//        }
-//        }
         return review!=null && reviews.add(review);
     }
 
@@ -65,10 +61,15 @@ public class RatingsImpl implements Ratings{
 
     @Override
     public double getAvgRatingByProduct(String product) {
-        double counter=reviews.stream()
-                .mapToDouble(p->p.getRating())
-                .count();
-        return counter/reviews.size();
+        List<Review> productReviews = reviews.stream()
+                .filter(review -> review.getProduct().equals(product))
+                .collect(Collectors.toList());
+
+        int ratingSum = productReviews.stream()
+                .mapToInt(Review::getRating)
+                .sum();
+
+        return productReviews.size() > 0 ? (double) ratingSum / productReviews.size() : 0.0;
     }
 
     @Override

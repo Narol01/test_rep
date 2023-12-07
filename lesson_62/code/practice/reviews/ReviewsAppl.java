@@ -1,7 +1,7 @@
 package practice.reviews;
 
-import practice.computer.model.Laptop;
-import practice.programer.Programmer;
+import practice.reviews.dao.Ratings;
+import practice.reviews.dao.RatingsImpl;
 import practice.reviews.model.Review;
 
 import java.util.*;
@@ -16,32 +16,58 @@ import java.util.stream.Collectors;
 public class ReviewsAppl {
     public static void main(String[] args) {
         Random random=new Random();
-        ArrayList<Review> reviews = new ArrayList<>(List.of(
-                new Review(random.nextInt(1,11),"Fine","Cat","Tomato" ),
-                new Review(random.nextInt(1,11),"Bad","Cat","Tomato" ),
-        new Review(random.nextInt(1,11),"very recommended","Si","Tomato" ),
-        new Review(random.nextInt(1,11),"Fresh and nice","Tine","Orange" ),
-        new Review(random.nextInt(1,11),"very good","Cat","Orange" ),
-        new Review(random.nextInt(1,11),"fine","Kim","Orange" ),
-        new Review(random.nextInt(1,11),"Fresh","Kim","Tomato" ),
-        new Review(random.nextInt(1,11),"delivery was too late","Kim","Potato" ),
-        new Review(random.nextInt(1,11),"tasty","Tine","Potato" ),
-        new Review(random.nextInt(1,11),"tasty","Stark","Pizza" ),
-        new Review(random.nextInt(1,11),"too hot","Dave","Pizza" )
-        ));
-        reviews.forEach(System.out::println);
-        System.out.println("----------------");
+        Ratings ratings=new RatingsImpl();
+        ArrayList<Review> reviews = new ArrayList<>();
+        reviews.add(new Review(random.nextInt(1,11),"Fine","Cat","Tomato" ));
+        reviews.add(new Review(random.nextInt(1,11),"Bad","Cat","Tomato" ));
+        reviews.add(new Review(random.nextInt(1,11),"very recommended","Si","Tomato" ));
+        reviews.add(new Review(random.nextInt(1,11),"Fresh and nice","Tine","Orange" ));
+        reviews.add(new Review(random.nextInt(1,11),"very good","Cat","Orange" ));
+        reviews.add(new Review(random.nextInt(1,11),"fine","Kim","Orange" ));
+        reviews.add(new Review(random.nextInt(1,11),"Fresh","Kim","Tomato" ));
+        reviews.add(new Review(random.nextInt(1,11),"delivery was too late","Kim","Potato" ));
+        reviews.add(new Review(random.nextInt(1,11),"tasty","Tine","Potato" ));
+        reviews.add(new Review(random.nextInt(1,11),"tasty","Stark","Pizza" ));
+        reviews.add(new Review(random.nextInt(1,11),"too hot","Dave","Pizza" ));
+
+
+        System.out.println("-------------Print List-------------");
+        /*reviews.forEach(System.out::println);*/
+
+
+        System.out.println("-------Sorting by rating---------");
         reviews.stream().sorted(Review::compareToRating).forEach(System.out::println);
-        Map<String,Long> techFrequency=reviews.stream()
-                .map(Review::getProduct)
-                //.flatMap(Review::stream)
-                .collect(Collectors.groupingBy(t->t ,Collectors.counting()));
+
+        System.out.println("-------Sorting by comment---------");
+        Map<String, Long> productFrequency = reviews.stream()
+                .collect(Collectors.groupingBy(Review::getProduct, Collectors.counting()));
+        System.out.println("Sorting By comment"+"\n"+productFrequency);//Результат группировки
+
+        productFrequency.entrySet().stream()//Сортировка
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
 
 
-        System.out.println(techFrequency);
-        long prod= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Tomato")).count();
-        long prodO= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Orange")).count();
-        long prodP= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Potato")).count();
-        long prodPi= reviews.stream().filter(p->p.getProduct().equalsIgnoreCase("Pizza")).count();
+        System.out.println("---------- Get Avg Rating -----------");
+        //double avg=ratings.getAvgRatingByProduct("Pizza");
+        System.out.println( getAvgRatingByProduct(reviews,"Pizza"));
+
+
+        System.out.println("-------Sorting by likes---------");
+        // reviews.stream().sorted(Review::compareTo).forEach(System.out::println); проверка что бы понять правильный ли список авторов отсортированый по лайкам
+        reviews.stream().sorted(Review::compareTo).map(Review::getAuthor).distinct().forEach(System.out::println);
+
+    }
+
+    public static double getAvgRatingByProduct(List<Review> reviews, String product) {
+        List<Review> productReviews = reviews.stream()
+                .filter(review -> review.getProduct().equals(product))
+                .collect(Collectors.toList());
+
+        int ratingSum = productReviews.stream()
+                .mapToInt(Review::getRating)
+                .sum();
+
+        return productReviews.size() > 0 ? (double) ratingSum / productReviews.size() : 0.0;
     }
 }

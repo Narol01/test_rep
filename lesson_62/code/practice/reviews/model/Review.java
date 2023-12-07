@@ -27,6 +27,7 @@ public class Review implements Comparable<Review>{
         this.rating = rating;
         this.comment = comment;
         this.author = author;
+        this.likes=getLikes();
         this.product = product;
 
     }
@@ -48,7 +49,8 @@ public class Review implements Comparable<Review>{
     }
 
     public int getLikes() {
-       return likes;
+        Random random=new Random();
+        return random.nextInt(10 ,51);
     }
 
     public LocalDateTime getDate() {
@@ -91,12 +93,13 @@ public class Review implements Comparable<Review>{
         return likes++;
     }
 
-    @Override
-    public int compareTo(Review o) {
-        return this.date.compareTo(o.date);
+    public int compareTo(Review other) {
+        // Compare based on the number of likes
+        return Integer.compare(this.likes, other.likes);
     }
 
     public int compareToRating(Review o) {
         return this.rating-(o.rating);
     }
+
 }
