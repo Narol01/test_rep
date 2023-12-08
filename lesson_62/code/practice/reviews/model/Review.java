@@ -67,7 +67,7 @@ public class Review implements Comparable<Review>{
 
     @Override
     public String toString() {
-        return "Review{" +
+        return "\nReview{" +
                 "comment='" + comment + '\'' +
                 ", rating=" + rating +
                 ", likes" + likes +
@@ -81,15 +81,15 @@ public class Review implements Comparable<Review>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return id == review.id;
+        return Objects.equals(author, review.author) && Objects.equals(product, review.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(author, product);
     }
 
-   public int addLike(){
+    public int addLike(){
         return likes++;
     }
 

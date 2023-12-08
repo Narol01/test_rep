@@ -17,7 +17,7 @@ public class ReviewsAppl {
     public static void main(String[] args) {
         Random random=new Random();
         Ratings ratings=new RatingsImpl();
-        ArrayList<Review> reviews = new ArrayList<>();
+        HashSet<Review> reviews = new HashSet<>();
         reviews.add(new Review(random.nextInt(1,11),"Fine","Cat","Tomato" ));
         reviews.add(new Review(random.nextInt(1,11),"Bad","Cat","Tomato" ));
         reviews.add(new Review(random.nextInt(1,11),"very recommended","Si","Tomato" ));
@@ -32,11 +32,26 @@ public class ReviewsAppl {
 
 
         System.out.println("-------------Print List-------------");
-        /*reviews.forEach(System.out::println);*/
+        reviews.forEach(System.out::println);
 
 
         System.out.println("-------Sorting by rating---------");
         reviews.stream().sorted(Review::compareToRating).forEach(System.out::println);
+
+        System.out.println("Sorted short list by avgRating of products");
+        reviews.stream()
+                .sorted((s1,s2)->Double.compare(getAvgRatingByProduct(reviews,s2.getProduct()),getAvgRatingByProduct(reviews,s1.getProduct())))
+                .map(Review::getProduct)
+                .distinct()
+                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("Sorted list by avgRating of products ");
+        Map<Double, List<Review>> mapAvgRat = reviews.stream()
+                .collect(Collectors.groupingBy(s->getAvgRatingByProduct(reviews,s.getProduct())));
+
+        mapAvgRat.entrySet().stream()
+                .sorted(Map.Entry.<Double, List<Review>>comparingByKey().reversed())//сортируем по ключу Map по убыванию
+                .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
 
         System.out.println("-------Sorting by comment---------");
         Map<String, Long> productFrequency = reviews.stream()
@@ -58,7 +73,7 @@ public class ReviewsAppl {
 
     }
 
-    public static double getAvgRatingByProduct(ArrayList<Review> reviews, String product) {
+    public static double getAvgRatingByProduct(HashSet<Review> reviews, String product) {
         return reviews.stream()
                 .filter(review -> review.getProduct().equals(product))
                 .mapToDouble(Review::getRating)
