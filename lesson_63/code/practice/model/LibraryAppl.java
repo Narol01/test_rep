@@ -1,5 +1,7 @@
 package practice.model;
 
+import practice.reviews.model.Review;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,9 +10,6 @@ import static java.util.stream.Collectors.mapping;
 public class LibraryAppl {
     public static void main(String[] args) {
         Library library = new Library();
-        library.getBooks().forEach(System.out::println);
-
-        library.getReaders().forEach(System.out::println);
 
         System.out.println("----------Books unsorted--------------");
         library.getBooks().forEach(System.out::println);
@@ -48,7 +47,7 @@ public class LibraryAppl {
                 .orElse(0);
         System.out.println(maxBooks);
 
-        System.out.println("--------------eeeeeeeeeeeeiiii----------------");
+        System.out.println("--------------list of borrower----------------");
         Map<String, List<Email>> result = new HashMap<>();
         for (Reader reader : library.getReaders()) {
             if (reader.isSubscriber()) {
@@ -71,7 +70,7 @@ public class LibraryAppl {
         }
         System.out.println("----------------------------------");
         System.out.println(result.entrySet());
-        System.out.println("===================================");
+        System.out.println("============list of borrower===========");
         Map<String, List<Email>> map = library.getReaders().stream()
                 .filter(Reader::isSubscriber)
                 .collect(Collectors.groupingBy(r -> r.getBooks().size() > 2 ? "TOO MUCH" : "OK",
@@ -80,6 +79,21 @@ public class LibraryAppl {
 
         boolean check=checkBook(library ,"George Orwell");
         System.out.println(check);
+
+            System.out.println("=============Sorted by rating=============");
+        library.getReviews().stream()
+                .sorted(Comparator.comparingInt(Reviews::getGrade).reversed()) // Sort reviews by grade in descending order
+                .forEach(System.out::println);
+        System.out.println("===========Sorted by quantity of reviews===============");
+        Map<String , Long> nameOfBook =library.getReviews().stream()
+                .collect(Collectors.groupingBy(Reviews::getBooks, Collectors.counting()));
+        nameOfBook.entrySet().stream()//Сортировка
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
+        System.out.println("=========Sorted reviews by like========");
+        library.getReviews().stream()
+                .sorted(Comparator.comparingInt(Reviews::numberOffLikes))
+                .forEach(System.out::println);
 
 
     }//end of main

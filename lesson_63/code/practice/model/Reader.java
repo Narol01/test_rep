@@ -13,11 +13,14 @@ public class Reader {
 
     List<Book> books;
 
+
+
     public Reader(String fio, String email, boolean subscriber) {
         this.fio = fio;
         Email = email;
         this.subscriber = subscriber;
         this.books=new ArrayList<>();
+
     }
 
     public Reader(String fio, String email) {
@@ -52,6 +55,7 @@ public class Reader {
     public List<Book> getBooks() {
         return books;
     }
+
 
     @Override
     public boolean equals(Object o) {
